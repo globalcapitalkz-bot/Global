@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Реестр</title>
+    <link rel="stylesheet" href="/dist/style.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@lucide/web@latest"></script>
+    <script src="/src/js/auth.js"></script>
+    <script src="/src/js/auth-admin.js"></script>
+    <script src="/src/js/username.js"></script>
+    <script src="/src/js/filial.js"></script>
+
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <!-- Topbar -->
+    <header class="w-full h-16 bg-gray-100 border-b border-blue-primary px-6 py-4 flex items-center justify-between">
+      <!-- Левая часть: логотип и навигация -->
+      <div class="flex items-center space-x-8">
+        <!-- Логотип -->
+        <img src="/src/image/Global_icono.svg" alt="Logo" class="h-9 mr-4 custom-icon" />
+
+        <!-- Навигация -->
+        <nav class="flex text-base text-gray-700">
+          <a href="/admin/form.html" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="mr-2 size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+              </svg>
+              Форма отправки
+          </a>
+
+          <a href="/admin/data.html" class="sidebar-link active">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="mr-3 size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+              </svg>
+
+             Реестр
+          </a>
+
+          <a href="/admin/setting.html" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                     class="mr-3 size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.591 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.592c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.591c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.592 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.591-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.592c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.591c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.591-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Настройки
+          </a>
+        </nav>
+      </div>
+
+      <!-- Правая часть: имя и кнопка выйти -->
+      <div class="flex items-center space-x-4">
+        <!-- Имя  -->
+        <div id="user-name" class="sidebar-link flex items-center space-x-2 text-base text-gray-800 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="mr-3 size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+
+        </div>
+
+          <!-- Кнопка выйти -->
+          <button
+                  id="exit"
+                type="submit"
+                class="bg-blue-primary cursor-pointer rounded-lg py-2 px-3 text-base text-white transition"
+              >
+                Выйти
+          </button>
+      </div>
+    </header>
+
+  <!-- Dashboard Content -->
+  <main class="bg-gray-100 flex-1 overflow-y-auto p-3">
+
+        <!-- Control Panel -->
+        <div class="bg-gray-100 my-6 rounded-lg bg-white" id="panel-container">
+            <div class="bg-gray-100 flex flex-wrap gap-4 lg:flex-nowrap">
+
+                <!-- Filters -->
+                <div class="mb-1">
+                    <label class="mb-1 block text-sm text-center text-gray-700">Дата начала</label>
+                      <input
+                        id="start-date"
+                        type="date"
+                        placeholder="Дата договора"
+                        class="input-base border-default"
+                        min="1900-01-01"
+                        max="2099-12-31"
+                      />
+                </div>
+
+                <div class="mb-1">
+                    <label class="mb-1 block text-sm text-center text-gray-700">Дата окончания</label>
+                      <input
+                        id="end-date"
+                        type="date"
+                        placeholder="Дата договора"
+                        class="input-base border-default"
+                        min="1900-01-01"
+                        max="2099-12-31"
+                      />
+                </div>
+
+                <button
+                      type="submit"
+                      id="date-filter"
+                      class="mt-6 bg-blue-primary cursor-pointer rounded-lg py-1 px-6 h-10 text-base text-white transition"
+                    >
+                  Применить
+                </button>
+
+                <input type="file" id="new-filial" accept=".xlsx" class="hidden" />
+
+                <div class="ml-auto flex gap-2">
+                <form id="upload-form" class="relative">
+                  <input
+                    type="file"
+                    id="excel-file"
+                    name="file"
+                    accept=".xls,.xlsx"
+                    class="hidden"
+                  />
+
+                  <button
+                    type="button"
+                    id="load-file"
+                    class="mt-6 bg-blue-primary cursor-pointer rounded-lg py-1 px-6 h-10 text-base text-white flex items-center gap-2"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" class="size-5">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Загрузить файл Excel
+                  </button>
+                </form>
+
+
+                  <button
+                    type="submit"
+                    id="download-excel"
+                    class="mt-6 bg-green-600 cursor-pointer rounded-lg py-1 px-6 h-10 text-base text-white transition flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="size-5">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                    Скачать данные
+                  </button>
+                </div>
+
+            </div>
+        </div>
+
+   <table id="myTable" class="bg-white display text-sm" style="width:100%">
+    <thead>
+      <tr class="bg-blue-500">
+          <th data-field="id">id</th>
+        <th data-field="department.dep_name">Филиал</th>
+        <th data-field="iin_bin">ИИН/БИН</th>
+        <th data-field="customer_name">Наименование заказчика</th>
+        <th data-field="payer">Плательщик</th>
+        <th data-field="object_name">Наименование объекта оценки</th>
+        <th data-field="object_address">Адрес объекта оценки</th>
+        <th data-field="contract_number">Номер договора</th>
+        <th data-field="contract_date">Дата договора</th>
+        <th data-field="contract_amount">Сумма по договору</th>
+        <th data-field="actual_payment">Фактическая оплата</th>
+        <th data-field="is_paid">Статус оплаты</th>
+        <th data-field="evaluation_count">Количество оценок</th>
+        <th data-field="bank_name">Наименование Банка</th>
+        <th data-field="cost">Стоимость</th>
+        <th data-field="area">Площадь кв.м.</th>
+        <th data-field="cost_per_sqm">Стоимость за кв.м.</th>
+        <th data-field="executor.full_name">Исполнитель</th>
+        <th data-field="title_number">Номер титулки</th>
+        <th data-field="is_offsite">Выездной</th>
+          <th data-field="company">Компания</th>
+      </tr>
+         <tr>
+          <!-- Фильтры -->
+          <th></th>
+          <th><input id="department__dep_name" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="iin_bin" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="customer_name" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="payer_filter" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="object_name" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="object_address" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="contract_number" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><input id="bank_name" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><input id="executor__full_name" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th><input id="title_number" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+          <th></th>
+             <th><input id="filter_company" type="text" placeholder="Поиск" style="font-weight: normal;" /></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+  </table>
+
+  <div class="table-footer">
+      <div class="record-count">
+        <span id="page-info">Страница 1</span>
+        - Всего записей: <span id="total-count">0</span>
+      </div>
+      <div class="pagination-controls">
+        <button id="prev-page" disabled><< Назад</button>
+        <button id="next-page">Вперёд >></button>
+      </div>
+  </div>
+
+   <div id="overlay" class="fixed inset-0 z-10 hidden cursor-pointer bg-black/50 transition lg:hidden"
+        onclick="toggleSidebar()"></div>
+
+   <div id="overlayModal" class="overlay fixed inset-0 z-20 hidden bg-black/50 transition"></div>
+
+    <!-- Редактировать запись -->
+    <div id="modalEdit" class="modal fixed top-10 left-1/2 z-30 hidden w-full max-w-2xl -translate-x-1/2">
+      <div class="relative">
+        <div class="flex flex-col rounded-3xl bg-gray-100 shadow-xl">
+
+            <form class="scrollbar max-h-[80vh] overflow-y-auto px-9 py-5" id="form-container">
+
+                <div class="mt-4 space-y-4">
+                    <div class="flex items-center justify-between ml-5 mb-4">
+                      <p class="text-xl font-semibold text-black-primary">
+                        Редактировать данные
+                      </p>
+
+                      <button type="button" onclick="toggleModal('modalEdit')" class="text-orange-500 hover:text-red-500">
+                        <i data-lucide="x" class="h-5 w-5 cursor-pointer"></i>
+                      </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-2 p-5 sm:grid-cols-2">
+                      <div>
+                           <label class="mb-1 block text-xs font-medium text-blue-primary">Филиал</label>
+                           <select id="city-select" class="h-11 select-base border-default">
+                             <option></option>
+                           </select>
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Фактическая оплата</label>
+                          <input
+                              id="pay"
+                              class="input-base border-default"
+                              inputmode="numeric"
+                              required
+                            />
+                      </div>
+
+                      <div>
+                        <label class="mb-1 block text-xs font-medium text-blue-primary">ИИН/БИН</label>
+                        <input
+                              id="iin-bin"
+                              class="form-input input-base border-default"
+                              maxlength="12"
+                              inputmode="numeric"
+                              required
+                            />
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Количество оценок</label>
+                          <input id="count-grade"
+                                 type="number"
+                                 class="input-base border-default"
+                                 required
+                          />
+                      </div>
+
+                      <div>
+                        <label class="mb-1 block text-xs font-medium text-blue-primary">Наименование заказчика</label>
+                        <input id="client" class="input-base border-default" required />
+                      </div>
+
+                      <div>
+                        <label class="mb-1 block text-xs font-medium text-blue-primary">Наименование Банка</label>
+                        <input id="bank" class="input-base border-default" required/>
+                      </div>
+
+                      <div>
+                        <label class="mb-1 block text-xs font-medium text-blue-primary">Плательщик</label>
+                        <input id="payer" class="input-base border-default" required/>
+                      </div>
+
+                      <div>
+                         <label class="mb-1 block text-xs font-medium text-blue-primary">Стоимость</label>
+                         <input
+                              id="cost"
+                              class="input-base border-default"
+                              inputmode="numeric"
+                              required
+                            />
+                      </div>
+
+                      <div>
+                        <label class="mb-1 block text-xs font-medium text-blue-primary">Наименование объекта оценки</label>
+                        <input id="object" class="input-base border-default" required/>
+                      </div>
+
+                      <div>
+                         <label class="mb-1 block text-xs font-medium text-blue-primary">Площадь, кв.м.</label>
+                         <input id="area"
+                                class="input-base border-default"
+                                type="number"
+                                required
+                                step="0.01"
+                         />
+                      </div>
+
+                      <div>
+                         <label class="mb-1 block text-xs font-medium text-blue-primary">Адрес объекта оценки</label>
+                         <input id="address" class="input-base border-default" required/>
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Стоимость за кв.м.</label>
+                          <p id="result" class="input-base border-default">0</p>
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Номер договора</label>
+                          <input id="number-deal" class="input-base border-default" required/>
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Номер титулки</label>
+                          <input id="number-titul"
+                                 class="input-base border-default"
+                                 type="number"
+                                 required
+                          />
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Дата договора</label>
+                          <input
+                            id="date-deal"
+                            type="date"
+                            class="input-base border-default"
+                            min="1900-01-01"
+                            max="2099-12-31"
+                            required
+                          />
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Выездной</label>
+                          <input id="trip" class="input-base border-default" />
+                      </div>
+
+                      <div>
+                          <label class="mb-1 block text-xs font-medium text-blue-primary">Сумма по договору</label>
+                          <input
+                              id="sum-deal"
+                              class="input-base border-default"
+                              inputmode="numeric"
+                              required
+                          />
+                      </div>
+
+                        <div>
+                         <label class="mb-1 block text-xs font-medium text-blue-primary">Компания</label>
+                           <select id="company" class="h-11 select-base border-default">
+                               <option>ТОО Global Capital</option>
+                               <option>ТОО Global Capital-N</option>
+                               <option>ТОО Global Capital-S</option>
+                               <option>ТОО Global Capital-WN</option>
+                               <option>ТОО Global Capital-E</option>
+                               <option>Филиал ТОО Global Capital-WN в г.Актау</option>
+                           </select>
+                      </div>
+
+                        <button type="button" class="mt-4 btn-outline btn--red" onclick="toggleModal('modalDel')">
+                          <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="size-5">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                          </span>
+                          Удалить запись
+                       </button>
+
+                      <button id="save-button" class="mt-5 py-1 px-6 h-10 btn-orange flex items-center gap-2">
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                          </svg>
+                        </span>
+                        Сохранить
+                      </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Data -->
+    <div id="modalDel"
+         class="modal fixed top-1/2 left-1/2 z-30 hidden w-full max-w-md -translate-x-1/2 -translate-y-1/2 px-4 sm:px-0">
+      <div class="relative">
+
+          <form class="flex flex-col rounded-3xl bg-white shadow-xl">
+            <div class="flex items-center justify-between border-b border-gray-200 px-6 pt-6 pb-4">
+                <p class="text-xl font-bold">Удалить запись</p>
+                <button type="button" onclick="toggleModal('modalDel')" class="text-orange-500 hover:text-red-500">
+                  <i data-lucide="x" class="h-5 w-5 cursor-pointer"></i>
+                </button>
+            </div>
+
+            <div class="px-6 py-4">
+                <p class="mb-4 text-sm">
+                  Вы точно уверены, что хотите удалить запись?
+                </p>
+            </div>
+
+            <div class="flex items-center justify-end gap-4 px-6 pb-6">
+                <button type="button" id="delete-data" class="btn-red">
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="size-5">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>
+                  </span>
+                  Удалить
+                </button>
+
+                <button type="button" onclick="toggleModal('modalDel')" class="btn-gray-b cursor-pointer">
+                  Отмена
+                </button>
+            </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</body>
+
+  <!-- Спиннер-оверлей -->
+  <div id="spinner">
+    <div class="spinner-content">
+      <div class="spinner-icon"></div>
+      <p style="font-size: 1.125rem; color: #1f2937; font-weight: 500;">
+        Загрузка файла...
+      </p>
+    </div>
+  </div>
+
+<script src="/src/js/admin-data.js"></script>
+<script src="/src/js/upload_excel.js"></script>
+
+</html>
